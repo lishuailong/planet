@@ -36,13 +36,13 @@ class SSM(base.Base):
   (s)->(s)  (s)->(s)
                   ^
                   :
-                 (o)
+                 (o)                                                    #???????????????
   """
 
   def __init__(self, state_size, embed_size, mean_only=False, min_stddev=1e-5):
     self._state_size = state_size
     self._embed_size = embed_size
-    self._transition_tpl = tf.make_template('transition', self._transition)
+    self._transition_tpl = tf.make_template('transition', self._transition)     #??????????
     self._posterior_tpl = tf.make_template('posterior', self._posterior)
     self._mean_only = mean_only
     self._min_stddev = min_stddev
@@ -96,7 +96,7 @@ class SSM(base.Base):
 
   def _posterior(self, prev_state, prev_action, obs):
     """Compute posterior state from previous state and current observation."""
-    prior = self._transition_tpl(prev_state, prev_action, tf.zeros_like(obs))
+    prior = self._transition_tpl(prev_state, prev_action, tf.zeros_like(obs))         #?????????
     inputs = tf.concat([prior['mean'], prior['stddev'], obs], -1)
     hidden = tf.layers.dense(inputs, **self._kwargs)
     mean = tf.layers.dense(hidden, self._state_size, None)
