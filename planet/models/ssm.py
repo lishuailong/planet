@@ -61,7 +61,7 @@ class SSM(base.Base):
   def dist_from_state(self, state, mask=None):
     """Extract the latent distribution from a prior or posterior state."""
     if mask is not None:
-      stddev = tools.mask(state['stddev'], mask, value=1)
+      stddev = tools.mask(state['stddev'], mask, value=1)              #?????????????
     else:
       stddev = state['stddev']
     dist = tfd.MultivariateNormalDiag(state['mean'], stddev)
